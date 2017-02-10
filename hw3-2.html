@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Untitled Document</title>
+     <script src="https://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+  
+    <script>
+    var arr = [85, 60, 99, 49, 77, 82];
+        
+        bind(arr);
+        render();
+        
+        function bind(dataSet){
+            //1----------------------------
+           var selection= d3.select("body")
+                            .selectAll("div")
+                            .data(dataSet);
+             //2-------------------------
+               selection.enter()
+                        .append("div") ;
+             //3------------------------
+               selection.exit().remove();
+        }
+        
+        function render(){
+            d3.selectAll("div").text(function(d,i){
+                return i +"," + d;
+            }).style({
+                color:textFormat
+            })
+        } 
+        
+        
+          function textFormat(d){
+                    if (d<70){
+                        return "red";
+                    }
+                    else{
+                        return "black";
+                    }
+                }
+         
+        
+  //  for(var i=0; i<arr.length; i++){
+  //      d3.select("body")
+  //      .append("div")
+  //      .datum(arr[i])
+        //.text("ok");
+  //      .text(function(d){
+ //       return d;
+ //       });
+  //  }
+  //  console.log(d3.selectAll("div") );
+    </script>
+
+
+</body>
+</html>

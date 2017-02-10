@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Untitled Document</title>
+     <script src="https://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+  
+   <input type="button" Value ="Click Add" onclick="Update()">
+   
+   <input type="button" Value ="Click Remove" onclick="Del()">
+   
+    <script>
+        //作業新增一個button,隋機產生0~100數字
+    var arr = [85, 60, 99, 49, 77, 82];
+    var w =900;
+    var h =300;
+    var padding = 100; //圖表空白區域
+        
+        
+        svg();
+        
+        bind(arr);
+        render();
+        bindText(arr);
+        renderText();
+        
+        function svg(){
+            d3.select("body").append("svg").attr({
+                width: w,
+                height: h
+            })
+        }
+        
+        function bind(dataSet){
+            //1----------------------------
+           var selection= d3.select("svg")
+                            .selectAll("rect")
+                            .data(dataSet);
+             //2-------------------------
+               selection.enter()
+                        .append("rect") ;
+             //3------------------------
+               selection.exit().remove();
+        }
+        
+        function render(){
+            d3.selectAll("rect").attr({
+                x: function(d,i){
+                    return padding+42*i;
+                   },
+                y:function(d,i){
+                        return h-padding-d;
+                  },
+                width:40,
+                height:function(d,i){
+                        return d;
+                        },
+                fill:colorFormat
+                
+            }) 
+        } 
+        
+        
+          function colorFormat(d){
+                    if (d<70){
+                        return "red";
+                    }
+                    else{
+                        return "lightgreen";
+                    }
+                }
+         
+      function bindText(dataSet){
+            //1----------------------------
+           var selection= d3.select("svg")
+                            .selectAll("text")
+                            .data(dataSet);
+             //2-------------------------
+               selection.enter()
+                        .append("text") ;
+             //3------------------------
+               selection.exit().remove();
+        }
+        
+      function renderText(){
+            d3.selectAll("text").attr({
+                "font-size":20,
+                x: function(d,i){
+                    return padding+42*i+10;
+                   },
+                y:function(d,i){
+                        return h-padding+20;
+                  }  
+            }).text(function(d){
+                return d;
+            }) 
+        }        
+            
+        function Update(){
+            var num=random(40,100)
+            arr.push(num);
+            bind(arr);
+            render();
+            bindText(arr);
+            renderText();
+        }
+        
+        function Del(){ 
+            arr.shift();
+            bind(arr);
+            render();
+            bindText(arr);
+            renderText();
+        }        
+         function random(n,m){      
+            var rNum =Math.ceil(Math.random()*(m-n)+n);    
+            return rNum; 
+        };
+    </script>
+
+
+</body>
+</html>
